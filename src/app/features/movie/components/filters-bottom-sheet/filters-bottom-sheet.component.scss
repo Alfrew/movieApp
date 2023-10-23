@@ -1,0 +1,19 @@
+@import "/src/assets/styles/variables.scss";
+.bottom-sheet-header {
+  margin-bottom: 12px;
+
+  h3 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+  }
+}
+.bottom-sheet-header,
+.bottom-sheet-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottom-sheet-content {
+  margin-bottom: 12px;
+}

@@ -1,0 +1,9 @@
+<button class="fab-button neutral-color" (click)="openFilters()">FILTERS <mat-icon>tune</mat-icon></button>
+<div class="chips-container">
+  <div class="chip" *ngIf="currentFilters.sort_by !== 'popularity.desc'">SORT BY {{currentFilters.sort_by}} <mat-icon class="chip-close" (click)="removeFilter('sort_by')">close</mat-icon></div>
+  <div class="chip" *ngIf="currentFilters.with_genres">{{getGenreById(currentGenres[0])}} {{returnGenreLength()}}<mat-icon class="chip-close" (click)="removeFilter('with_genres')">close</mat-icon></div>
+  <div class="chip" *ngIf="currentFilters.year">{{currentFilters.year}} <mat-icon class="chip-close" (click)="removeFilter('year')">close</mat-icon></div>
+  <div class="chip" *ngIf="currentFilters.include_adult">INCLUDE ADULT <mat-icon class="chip-close" (click)="removeFilter('include_adult')">close</mat-icon></div>
+  <div class="chip" *ngIf="currentFilters.vote_average_gte">MIN VOTE {{currentFilters.vote_average_gte}} <mat-icon class="chip-close" (click)="removeFilter('vote_average_gte')">close</mat-icon></div>
+  <div class="chip" *ngIf="currentFilters.vote_average_lte">MAX VOTE {{currentFilters.vote_average_lte}} <mat-icon class="chip-close" (click)="removeFilter('vote_average_lte')">close</mat-icon></div>
+</div>

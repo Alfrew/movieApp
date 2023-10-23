@@ -1,0 +1,18 @@
+<div class="bottom-sheet-header">
+  <h3>FILTERS</h3>
+  <sm-icon-button icon="clear" (buttonClick)="closeFilters()"></sm-icon-button>
+</div>
+
+<div class="bottom-sheet-content">
+  <sm-input-select [(value)]="selectedFilters.sort_by" label="Sort" [optionList]="sortList"></sm-input-select>
+  <sm-input-multi-select [(value)]="selectedGenres" label="Genres" [optionList]="genreList"></sm-input-multi-select>
+  <sm-input-select [(value)]="selectedFilters.year" label="Year" [optionList]="yearList"></sm-input-select>
+  <div class="mat-slide-wrapper"><mat-slide-toggle [(ngModel)]="selectedFilters.include_adult">Include Adult</mat-slide-toggle></div>
+  <sm-input-number [(value)]="selectedFilters.vote_average_gte" label="Min Average Vote" maxValue="10" minValue="0" suffix="/10"></sm-input-number>
+  <sm-input-number [(value)]="selectedFilters.vote_average_lte" label="Max Average Vote" maxValue="10" minValue="0" suffix="/10"></sm-input-number>
+</div>
+
+<div class="bottom-sheet-footer">
+  <sm-flat-button label="CLEAR ALL" (buttonClick)="clearFilters()"></sm-flat-button>
+  <sm-flat-button color="primary" label="APPLY" (buttonClick)="applyFilters()"></sm-flat-button>
+</div>

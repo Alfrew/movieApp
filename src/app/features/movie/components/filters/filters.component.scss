@@ -1,0 +1,43 @@
+@import "/src/assets/styles/variables.scss";
+
+.fab-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &.neutral-color {
+    background-color: $light-color;
+    color: $text-color;
+  }
+}
+
+.chips-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  margin: 8px 0px;
+  overflow: auto;
+
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 2px solid $light-color;
+    border-radius: 24px;
+    padding: 4px 12px;
+    color: $text-color;
+    font-size: 1rem;
+    font-weight: 600;
+    text-wrap: nowrap;
+
+    .chip-close {
+      cursor: pointer;
+    }
+  }
+}
