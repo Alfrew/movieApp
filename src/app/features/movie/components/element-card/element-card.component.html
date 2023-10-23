@@ -1,0 +1,19 @@
+<div *ngIf="card" class="card-wrapper animated-placeholder-bg">
+
+  <div class="element-card" [ngStyle]="{'background-image': 'url(' + card.backgroundPath + ')'}">
+    <div class="background-fade">
+      <div class="element-card-text ">
+        <p class="title" (click)="emitLink(card.id)">{{card.title}}</p>
+        <p class="subtitle">{{card.subtitle}}</p>
+      </div>
+
+      <div *ngIf="card.info || card.ctas" class="element-card-footer">
+        <span *ngIf="card.info" class="info">* {{card.info}}</span>
+        <div *ngIf="card.ctas" class="cta">
+          <sm-icon-button *ngFor="let cta of card.ctas" [color]="cta.isActive ? 'primary':undefined" [icon]="cta.isActive ? cta.iconFill: cta.iconEmpty" (buttonClick)="emitClick(cta)"></sm-icon-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
