@@ -1,0 +1,17 @@
+@import "/src/assets/styles/variables.scss";
+
+.section {
+  margin-bottom: 40px;
+  color: $text-color;
+  .section-title {
+    border-left: 4px solid $primary-color;
+    margin-top: 0;
+    padding-left: 8px;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .section-content {
+    overflow-x: auto;
+  }
+}
