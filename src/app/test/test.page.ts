@@ -1,15 +1,13 @@
 import { Component, OnInit } from "@angular/core";
+import { MovieService } from "../features/movie/services/movie.service";
 
 @Component({
   selector: "page-test",
-  template: ``,
+  template: `<app-paginator></app-paginator>`,
   styles: [],
 })
 export class TestPage implements OnInit {
-  constructor() {}
+  constructor(private movieService: MovieService) {}
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-  }
+  ngOnInit(): void {}
 }
