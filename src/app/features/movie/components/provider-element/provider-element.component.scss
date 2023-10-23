@@ -1,0 +1,19 @@
+@import "/src/assets/styles/variables.scss";
+
+.provider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .provider-img {
+    background-position: center center;
+    background-size: cover;
+    border-radius: 100%;
+    width: 75px;
+    aspect-ratio: 1;
+  }
+  .provider-subtitle {
+    color: $text-color;
+    text-align: center;
+  }
+}

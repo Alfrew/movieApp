@@ -1,0 +1,4 @@
+<div *ngIf="provider" class="provider-container">
+  <div class="provider-img" [ngStyle]="{'background-image': 'url(' + provider.logo_path + ')'}"></div>
+  <p class="provider-subtitle">{{ provider.provider_name }}</p>
+</div>
