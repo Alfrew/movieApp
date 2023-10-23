@@ -1,0 +1,167 @@
+import { Component, OnInit } from "@angular/core";
+import { Subscription } from "rxjs";
+import { ActivatedRoute, Params } from "@angular/router";
+import { ShowService } from "../../services/show.service";
+import { ShowInfo } from "../../models/show-info";
+import { CrewMember } from "../../models/crew-member";
+import { ImageInfo } from "../../models/image-info";
+import { CardInfo } from "../../models/card";
+import { Show } from "../../models/show";
+import { Sharedfunctions } from "src/app/core/utils/sharedFunctions";
+import { Genre } from "../../models/genre";
+import { StreamingProvider } from "../../models/streaming-provider";
+import { CastMember } from "../../models/cast-member";
+import { ShowSeason } from "../../models/show-season";
+import { IMG_PATH } from "src/app/core/constants/httpConsts";
+
+@Component({
+  templateUrl: "./show-info.page.html",
+  styleUrls: ["./show-info.page.scss"],
+})
+export class ShowInfoPage {
+  backdrops: ImageInfo[] = [];
+  castCards: CardInfo[] = [];
+  directors: CrewMember[] = [];
+  show?: ShowInfo;
+  showGenreList: Genre[] = [];
+  showRecomendations: CardInfo[] = [];
+  posters: ImageInfo[] = [];
+  producers: CrewMember[] = [];
+  providers: StreamingProvider[] = [];
+  seasonCards: CardInfo[] = [];
+  sub!: Subscription;
+  writers: CrewMember[] = [];
+
+  constructor(private route: ActivatedRoute, private showService: ShowService) {}
+
+  ngOnInit(): void {
+    this.getGenres();
+    this.onGetPath();
+  }
+
+  private getGenres() {
+    this.showService.getShowGenresList().subscribe((res) => {
+      this.showGenreList = res.genres;
+    });
+  }
+
+  private getShow(id: number) {
+    this.showService.getShowById(id).subscribe((showData) => {
+      this.show = showData;
+      this.seasonCards = this.mapSeasonToCard(showData.seasons);
+    });
+  }
+
+  private getShowCredits(id: number) {
+    this.showService.getShowCredits(id).subscribe((showCredits) => {
+      this.castCards = this.mapCastToCard(showCredits.cast.slice(0, 14));
+
+      this.directors = showCredits.crew.filter((crewMem: any) => {
+        return crewMem.job == "Director";
+      });
+      this.producers = showCredits.crew.filter((crewMem: any) => {
+        return crewMem.job == "Producer";
+      });
+      this.writers = showCredits.crew.filter((crewMem: any) => {
+        return crewMem.job == "Writer";
+      });
+    });
+  }
+
+  private getShowImages(id: number) {
+    this.showService.getShowImages(id).subscribe((showImages) => {
+      this.backdrops = showImages.backdrops.slice(0, 29);
+      this.posters = showImages.posters.slice(0, 29);
+    });
+  }
+
+  private getShowRecomendations(id: number) {
+    this.showService.getShowRecomendations(id).subscribe((showData) => {
+      this.showRecomendations = this.mapShowToCard(showData.results);
+    });
+  }
+
+  /**
+   * @deprecated can't be used since it doesn't return neither a link or video to watch
+   * @param id  the show Id
+   */
+  private getShowVideos(id: number) {
+    this.showService.getShowVideos(id).subscribe((showData) => {});
+  }
+
+  private getShowWatchProviders(id: number) {
+    this.showService.getShowWatchProviders(id).subscribe((showProviders) => {
+      console.log(showProviders.results.US);
+      if (showProviders.results.US.buy) {
+        this.providers.push(
+          ...showProviders.results.US.buy.map((prov: StreamingProvider) => {
+            prov.logo_path = IMG_PATH + prov.logo_path;
+            return prov;
+          })
+        );
+      }
+      if (showProviders.results.US.flatrate) {
+        this.providers.push(
+          ...showProviders.results.US.flatrate.map((prov: StreamingProvider) => {
+            prov.logo_path = IMG_PATH + prov.logo_path;
+            return prov;
+          })
+        );
+      }
+    });
+  }
+
+  private mapCastToCard(castList: CastMember[]): CardInfo[] {
+    let cardList: CardInfo[] = [];
+    castList.forEach((castMember) => {
+      let card: CardInfo = {
+        backgroundPath: IMG_PATH + castMember.profile_path,
+        id: castMember.id,
+        subtitle: castMember.character,
+        title: castMember.name,
+      };
+      cardList.push(card);
+    });
+    return cardList;
+  }
+
+  private mapSeasonToCard(seasonList: ShowSeason[]): CardInfo[] {
+    let cardList: CardInfo[] = [];
+    seasonList.forEach((season) => {
+      let card: CardInfo = {
+        backgroundPath: IMG_PATH + season.poster_path,
+        id: season.id,
+        subtitle: `${season.episode_count} Episodes`,
+        title: season.name,
+      };
+      cardList.push(card);
+    });
+    return cardList;
+  }
+
+  private mapShowToCard(showList: Show[]): CardInfo[] {
+    let cardList: CardInfo[] = [];
+    showList.forEach((show) => {
+      let card: CardInfo = {
+        backgroundPath: IMG_PATH + show.poster_path,
+        id: show.id,
+        info: `${show.vote_average}/10`,
+        subtitle: `${show.first_air_date} * ${Sharedfunctions.returnGenreById(this.showGenreList, show.genre_ids[0])}`,
+        title: show.name,
+      };
+      cardList.push(card);
+    });
+    return cardList;
+  }
+
+  private onGetPath() {
+    this.sub = this.route.params.subscribe((params: Params) => {
+      const id = +params["id"];
+      this.getShow(id);
+      this.getShowCredits(id);
+      this.getShowImages(id);
+      this.getShowRecomendations(id);
+      this.getShowWatchProviders(id);
+    });
+  }
+}

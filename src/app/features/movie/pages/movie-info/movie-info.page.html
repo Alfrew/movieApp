@@ -1,0 +1,82 @@
+<div *ngIf="movie">
+  <div class="backdrop-wrapper">
+    <s-image [imagePath]="movie.backdrop_path"></s-image>
+  </div>
+
+  <div class="main-section">
+    <h1 class="main-title">{{ movie.title }}</h1>
+    <p class="main-info">{{ movie.release_date | date:"yyyy" }}, <span *ngFor="let genre of movie.genres, index as i">{{genre.name}}{{ i < movie.genres.length-1 ? "/" : "," }}</span> {{ movie.runtime | minutesConverter }}</p>
+    <div class="votes-container">
+      <p class="vote-average">{{ movie.vote_average * 10 | number }}%</p>
+      <div>
+        <p class="vote-description">Audience score</p>
+        <p class="vote-count">Based on {{ movie.vote_count }} votes</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Providers /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section *ngIf="providers.length>0" sectionTitle="Where to watch">
+    <div class="media-flex">
+      <app-provider-element *ngFor="let provider of providers" [provider]="provider"></app-provider-element>
+    </div>
+  </app-ma-section>
+
+  <!-- Posters ///////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section sectionTitle="Posters">
+    <div class="media-flex">
+      <s-image *ngFor="let poster of posters" [imagePath]="poster.file_path" [imgWidth]="200" [imgHeight]="300"></s-image>
+    </div>
+  </app-ma-section>
+
+  <!-- Photos ////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section sectionTitle="Photos">
+    <div class="media-flex">
+      <s-image *ngFor="let backdrop of backdrops" [imagePath]="backdrop.file_path" [imgWidth]="400" [imgHeight]="225"></s-image>
+    </div>
+  </app-ma-section>
+
+
+  <!-- Movie info ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section sectionTitle="Movie info">
+    <div class="movie-info">
+      <p>{{movie.overview}}</p>
+      <ul>
+        <li>
+          <b>Genres: </b><span *ngFor="let genre of movie.genres, index as i">{{genre.name}}{{ i < movie.genres.length-1 ? ", " : "" }}</span>
+        </li>
+        <li>
+          <b>Director: </b><span *ngFor="let director of directors, index as i">{{director.name}}{{ i < directors.length-1 ? ", " : "" }}</span>
+        </li>
+        <li>
+          <b>Producer: </b><span *ngFor="let producer of producers, index as i">{{producer.name}}{{ i < producers.length-1 ? ", " : "" }}</span>
+        </li>
+        <li>
+          <b>Writer: </b><span *ngFor="let writer of writers, index as i">{{writer.name}}{{ i < writers.length-1 ? ", " : "" }}</span>
+        </li>
+        <li><b>Original Language: </b>{{ movie.original_language | languageCode}}</li>
+        <li><b>Release Date: </b>{{ movie.release_date | date }}</li>
+        <li *ngIf="movie.revenue>0"><b>Revenue: </b>${{ movie.revenue | numberSuffix }}</li>
+        <li *ngIf="movie.budget>0"><b>Budget: </b>${{ movie.budget | numberSuffix }}</li>
+        <li><b>Runtime: </b>{{ movie.runtime | minutesConverter }}</li>
+        <li><b>Distributor: </b>{{movie.production_companies[0].name}}</li>
+        <li><b>Status: </b>{{movie.status}}</li>
+        <li *ngIf="movie.belongs_to_collection"><b>Belongs to collection: </b><a [href]="movie.homepage" target="_blank">{{movie.belongs_to_collection.name}}</a></li>
+      </ul>
+    </div>
+  </app-ma-section>
+
+  <!-- Cast //////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section sectionTitle="Cast">
+    <div class="media-flex">
+      <app-element-card *ngFor="let card of castCards" [card]="card"></app-element-card>
+    </div>
+  </app-ma-section>
+
+  <!-- Recomendations ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section *ngIf="movieRecomendations.length>0" sectionTitle="Movie Recomendations">
+    <div class="media-flex">
+      <app-element-card *ngFor="let card of movieRecomendations" [card]="card"></app-element-card>
+    </div>
+  </app-ma-section>
+</div>

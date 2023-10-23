@@ -1,0 +1,80 @@
+<div *ngIf="show">
+  <div class="backdrop-wrapper">
+    <s-image [imagePath]="show.backdrop_path"></s-image>
+  </div>
+
+  <div class="main-section">
+    <h1 class="main-title">{{ show.name }}</h1>
+    <p class="main-info">{{ show.first_air_date | date:"yyyy" }}, <span *ngFor="let genre of show.genres, index as i">{{genre.name}}{{ i < show.genres.length-1 ? "/" : "," }}</span> {{ show.number_of_seasons }} Seasons
+    </p>
+    <div class="votes-container">
+      <p class="vote-average">{{ show.vote_average * 10 | number }}%</p>
+      <div>
+        <p class="vote-description">Audience score</p>
+        <p class="vote-count">Based on {{ show.vote_count }} votes</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Providers /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section *ngIf="providers.length>0" sectionTitle="Where to watch">
+    <div class="media-flex">
+      <app-provider-element *ngFor="let provider of providers" [provider]="provider"></app-provider-element>
+    </div>
+  </app-ma-section>
+
+  <!-- Seasons /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section sectionTitle="Seasons">
+    <div class="media-flex">
+      <app-element-card *ngFor="let card of seasonCards" [card]="card"></app-element-card>
+    </div>
+  </app-ma-section>
+
+  <!-- Posters ///////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section sectionTitle="Posters">
+    <div class="media-flex">
+      <s-image *ngFor="let poster of posters" [imagePath]="poster.file_path" [imgWidth]="200" [imgHeight]="300"></s-image>
+    </div>
+  </app-ma-section>
+
+  <!-- Photos ////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section sectionTitle="Photos">
+    <div class="media-flex">
+      <s-image *ngFor="let backdrop of backdrops" [imagePath]="backdrop.file_path" [imgWidth]="400" [imgHeight]="225"></s-image>
+    </div>
+  </app-ma-section>
+
+
+  <!-- Show info /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section sectionTitle="Show info">
+    <div class="show-info">
+      <p>{{show.overview}}</p>
+      <ul>
+        <li>
+          <b>Genres: </b><span *ngFor="let genre of show.genres, index as i">{{genre.name}}{{ i < show.genres.length-1 ? ", " : "" }}</span>
+        </li>
+        <li><b>Episodes: </b>{{ show.number_of_episodes }}</li>
+        <li><b>Seasons: </b>{{ show.number_of_seasons }}</li>
+        <li><b>Original Language: </b>{{ show.original_language | languageCode}}</li>
+        <li><b>First Air Date: </b>{{ show.first_air_date | date }}</li>
+        <li><b>Episode Runtime: </b>{{ show.episode_run_time[0] }}mins</li>
+        <li><b>Distributor: </b>{{show.production_companies[0].name}}</li>
+        <li><b>Status: </b>{{show.status}}</li>
+      </ul>
+    </div>
+  </app-ma-section>
+
+  <!-- Cast //////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section sectionTitle="Cast">
+    <div class="media-flex">
+      <app-element-card *ngFor="let card of castCards" [card]="card"></app-element-card>
+    </div>
+  </app-ma-section>
+
+  <!-- Recomendations ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <app-ma-section *ngIf="showRecomendations.length>0" sectionTitle="Show Recomendations">
+    <div class="media-flex">
+      <app-element-card *ngFor="let card of showRecomendations" [card]="card"></app-element-card>
+    </div>
+  </app-ma-section>
+</div>

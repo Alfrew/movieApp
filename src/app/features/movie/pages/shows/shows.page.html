@@ -1,0 +1,21 @@
+<div class="header-container">
+  <div class="title">
+    <h1>Shows</h1>
+    <scm-input-select [optionList]="showRequestList" [(value)]="requestType" (valueChange)="requestChanged()"></scm-input-select>
+  </div>
+
+  <p>{{date}}</p>
+</div>
+
+<div class="filters-container">
+  <app-filters [genreList]="showGenreList" [currentFilters]="filters" (filtersChange)="filtersChanged($event)"></app-filters>
+</div>
+
+<div class="card-container">
+  <app-element-card class="card" *ngFor="let card of showCardList" [card]="card"></app-element-card>
+  <!-- <app-element-card class="card" *ngFor="let card of showCardList" [card]="card" [routerLink]="['/browse/shows', card.id]"></app-element-card> -->
+</div>
+
+<div class="load-more-container">
+  <sm-flat-button *ngIf="filters.page < totalPages" label="LOAD MORE" (buttonClick)="loadMore()"></sm-flat-button>
+</div>
