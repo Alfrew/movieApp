@@ -1,0 +1,20 @@
+<ng-container *ngIf="formControl; else noControl">
+  <mat-form-field appearance="outline">
+    <mat-label *ngIf="label">{{ label }}</mat-label>
+    <input matInput [formControl]="formControl" type="number" [min]="minValue" [max]="maxValue" [placeholder]="placeholder ">
+    <span matTextSuffix *ngIf="isPercentage">%</span>
+    <span matTextSuffix *ngIf="isCurrency">{{ "common.currency" }}</span>
+    <span matTextSuffix *ngIf="suffix">{{suffix}}</span>
+  </mat-form-field>
+  <mat-error *ngIf="formControl.hasError('required')">{{ 'common.error.required' }}</mat-error>
+</ng-container>
+
+<ng-template #noControl>
+  <mat-form-field appearance="outline">
+    <mat-label *ngIf="label">{{ label }}</mat-label>
+    <input matInput [(ngModel)]="value" type="number" [min]="minValue" [max]="maxValue" [placeholder]="placeholder" [disabled]="isDisabled" (ngModelChange)="valueChange.emit($event)">
+    <span matTextSuffix *ngIf="isPercentage">%</span>
+    <span matTextSuffix *ngIf="isCurrency">{{ "common.currency" }}</span>
+    <span matTextSuffix *ngIf="suffix">{{suffix}}</span>
+  </mat-form-field>
+</ng-template>
