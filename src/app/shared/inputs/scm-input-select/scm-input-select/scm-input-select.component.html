@@ -1,0 +1,24 @@
+<ng-container *ngIf="formControl; else noControl">
+  <div class="scm-select">
+    <mat-label *ngIf="label">{{ label }}</mat-label>
+    <mat-select [formControl]="formControl" panelClass="custom-panel" [placeholder]="placeholder ">
+      <mat-option *ngIf="hasClearOption">{{ "common.select.clear" }}</mat-option>
+      <mat-option *ngFor="let option of optionList" [value]="option.value">
+        {{ option.viewValue }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="formControl.hasError('required')">{{ 'common.error.required' }}</mat-error>
+  </div>
+</ng-container>
+
+<ng-template #noControl>
+  <div class="scm-select">
+    <mat-label *ngIf="label">{{ label }}</mat-label>
+    <mat-select [placeholder]="placeholder" [value]="value" [disabled]="isDisabled" (valueChange)="valueChange.emit($event)">
+      <mat-option *ngIf="hasClearOption">{{ "common.select.clear" }}</mat-option>
+      <mat-option *ngFor="let option of optionList" [value]="option.value">
+        {{ option.viewValue }}
+      </mat-option>
+    </mat-select>
+  </div>
+</ng-template>
