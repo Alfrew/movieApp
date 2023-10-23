@@ -1,0 +1,29 @@
+@import "/src/assets/styles/variables.scss";
+
+.footer-nav {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: $background-color;
+  padding: 12px 0px;
+
+  .nav-link {
+    text-align: center;
+    color: $neutral-color;
+    cursor: pointer;
+
+    .nav-link-label {
+      margin: 0;
+      border-radius: 12px;
+      padding: 4px;
+      font-size: 0.8rem;
+    }
+
+    &.active {
+      color: $primary-color;
+      .nav-link-label {
+        background-color: $primary-color;
+        color: $background-color;
+      }
+    }
+  }
+}
