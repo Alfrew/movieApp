@@ -1,0 +1,9 @@
+<div class="paginator-container">
+  <div class="paginator-controller">
+    <mat-icon class="paginator-icon" [ngClass]="{'disabled':page <= 1}" (click)="changePage(1)">first_page</mat-icon>
+    <mat-icon class="paginator-icon" [ngClass]="{'disabled':page <=1 }" (click)="changePage(page-1)">chevron_left</mat-icon>
+    {{ page }} of {{ totalPages }}
+    <mat-icon class="paginator-icon" [ngClass]="{'disabled':page >= totalPages}" (click)="changePage(page+1)">chevron_right</mat-icon>
+    <mat-icon class="paginator-icon" [ngClass]="{'disabled':page >= totalPages}" (click)="changePage(totalPages)">last_page</mat-icon>
+  </div>
+</div>

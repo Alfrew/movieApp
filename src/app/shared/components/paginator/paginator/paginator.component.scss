@@ -1,0 +1,28 @@
+@import "/src/assets/styles/variables.scss";
+
+.paginator-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 0px;
+
+  .paginator-controller {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: $background-color;
+    border-radius: 6px;
+    padding: 8px;
+    color: $text-color;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .paginator-icon {
+    color: $primary-color;
+    cursor: pointer;
+
+    &.disabled {
+      color: $neutral-color;
+      cursor: auto;
+    }
+  }
+}
