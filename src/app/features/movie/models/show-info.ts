@@ -8,7 +8,7 @@ import { ShowSeason } from "./show-season";
 export interface ShowInfo {
   adult: false;
   backdrop_path: string;
-  created_by: unknown[]; //Da rivedere
+  created_by: unknown[]; //TODO
   episode_run_time: number[];
   first_air_date: string;
   genres: Genre[];
@@ -19,11 +19,11 @@ export interface ShowInfo {
   last_air_date: string;
   last_episode_to_air: ShowEpisode;
   name: string;
-  next_episode_to_air: null;
   networks: ProductionCompany[];
+  next_episode_to_air: null;
   number_of_episodes: number;
   number_of_seasons: number;
-  origin_country: ["JP"];
+  origin_country: string[];
   original_language: string;
   original_name: string;
   overview: string;

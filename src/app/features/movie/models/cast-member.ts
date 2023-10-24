@@ -1,6 +1,6 @@
 export interface CastMember {
   adult: boolean;
-  cast_id: 4;
+  cast_id: number;
   character: string;
   credit_id: string;
   gender: 0 | 1 | 2;
