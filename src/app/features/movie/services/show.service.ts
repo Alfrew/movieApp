@@ -13,7 +13,6 @@ import { API_KEY, API_URL_HEADER } from "src/app/core/constants/httpConsts";
   providedIn: "root",
 })
 export class ShowService {
-  searchApiUrl: string = 'https://api.themoviedb.org/3/search/tv?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="';
   apiPointer: string = "tv/";
   constructor(private http: HttpClient) {}
 
@@ -92,5 +91,10 @@ export class ShowService {
   }
   getShowWatchProviders(id: number) {
     return this.http.get<any>(API_URL_HEADER + this.apiPointer + id + "/watch/providers?api_key=" + API_KEY);
+  }
+  searchShow(searchvalue: string) {
+    return this.http.get<{ page: number; results: Show[]; total_pages: number; total_results: number }>(
+      API_URL_HEADER + "search/tv?query=" + searchvalue + "&include_adult=false&language=en-US&page=1&api_key=" + API_KEY
+    );
   }
 }

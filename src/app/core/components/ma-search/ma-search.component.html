@@ -1,0 +1,26 @@
+<input class="search-input" type="text" placeholder="Search" matInput [matAutocomplete]="auto" name="search" (keyup)="search($event.target)">
+
+<mat-autocomplete #auto="matAutocomplete">
+  <mat-optgroup label="Movies">
+    <mat-option *ngFor="let movie of movieList" [routerLink]="'/browse/movies/'+movie.id" (click)="term$.next('')">
+      <div class="custom-option">
+        <s-image [imgHeight]="90" [imgWidth]="60" [imagePath]="movie.poster_path"></s-image>
+        <div>
+          <h4>{{movie.title}}</h4>
+          <p *ngIf="movie.release_date">({{movie.release_date| date:"yyyy"}})</p>
+        </div>
+      </div>
+    </mat-option>
+  </mat-optgroup>
+  <mat-optgroup label="Shows">
+    <mat-option *ngFor="let show of showList" [routerLink]="'/browse/shows/'+show.id" (click)="term$.next('')">
+      <div class="custom-option">
+        <s-image [imgHeight]="90" [imgWidth]="60" [imagePath]="show.poster_path"></s-image>
+        <div>
+          <h4>{{show.name}}</h4>
+          <p *ngIf="show.first_air_date">({{show.first_air_date | date:"yyyy"}})</p>
+        </div>
+      </div>
+    </mat-option>
+  </mat-optgroup>
+</mat-autocomplete>

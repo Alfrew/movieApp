@@ -1,2 +1,2 @@
-<img *ngIf="imgWidth && imgWidth" [width]="imgWidth" [height]="imgHeight" [src]="collectionPath+imagePath" alt="" srcset="">
-<img class="img" *ngIf="!imgWidth && !imgWidth" [src]="collectionPath+imagePath" alt="" srcset="">
+<img *ngIf="imgWidth && imgHeight" [width]="imgWidth" [height]="imgHeight" [src]="collectionPath+imagePath" alt="" srcset="">
+<img class="img" *ngIf="!imgWidth && !imgHeight" [src]="collectionPath+imagePath" alt="" srcset="">
