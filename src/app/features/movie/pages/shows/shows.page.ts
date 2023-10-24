@@ -45,7 +45,7 @@ export class ShowsPage implements OnInit {
   requestType: ShowRequestType = "popular";
   totalPages: number = 500;
 
-  constructor(private appStatusService: AppStatusService, private showService: ShowService) {}
+  constructor(private appStatusSRV: AppStatusService, private showSRV: ShowService) {}
 
   ngOnInit(): void {
     this.getGenres();
@@ -61,17 +61,17 @@ export class ShowsPage implements OnInit {
   }
 
   getShows() {
-    this.appStatusService.showSpinner();
-    this.showService.getShowList(this.filters, this.requestType).subscribe({
+    this.appStatusSRV.showSpinner();
+    this.showSRV.getShowList(this.filters, this.requestType).subscribe({
       next: (res) => {
         this.showCardList.push(...this.mapShowToCard(res.results));
         this.totalPages = res.total_pages < 500 ? res.total_pages : 500;
       },
       complete: () => {
-        this.appStatusService.hideSpinner();
+        this.appStatusSRV.hideSpinner();
       },
       error: () => {
-        this.appStatusService.hideSpinner();
+        this.appStatusSRV.hideSpinner();
       },
     });
   }
@@ -93,7 +93,7 @@ export class ShowsPage implements OnInit {
   }
 
   private getGenres() {
-    this.showService.getShowGenresList().subscribe((res) => {
+    this.showSRV.getShowGenresList().subscribe((res) => {
       this.showGenreList = res.genres;
     });
   }

@@ -45,7 +45,7 @@ export class MoviesPage implements OnInit {
   requestType: MovieRequestType = "popular";
   totalPages: number = 500;
 
-  constructor(private appStatusService: AppStatusService, private movieService: MovieService) {}
+  constructor(private appStatusSRV: AppStatusService, private movieSRV: MovieService) {}
 
   ngOnInit(): void {
     this.getGenres();
@@ -61,17 +61,17 @@ export class MoviesPage implements OnInit {
   }
 
   getMovies() {
-    this.appStatusService.showSpinner();
-    this.movieService.getMovieList(this.filters, this.requestType).subscribe({
+    this.appStatusSRV.showSpinner();
+    this.movieSRV.getMovieList(this.filters, this.requestType).subscribe({
       next: (res) => {
         this.movieCardList.push(...this.mapMovieToCard(res.results));
         this.totalPages = res.total_pages < 500 ? res.total_pages : 500;
       },
       complete: () => {
-        this.appStatusService.hideSpinner();
+        this.appStatusSRV.hideSpinner();
       },
       error: () => {
-        this.appStatusService.hideSpinner();
+        this.appStatusSRV.hideSpinner();
       },
     });
   }
@@ -93,7 +93,7 @@ export class MoviesPage implements OnInit {
   }
 
   private getGenres() {
-    this.movieService.getMovieGenresList().subscribe((res) => {
+    this.movieSRV.getMovieGenresList().subscribe((res) => {
       this.movieGenreList = res.genres;
     });
   }

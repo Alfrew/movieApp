@@ -14,7 +14,7 @@ import { NG_VALUE_ACCESSOR, ControlContainer, FormControl, ControlValueAccessor 
     },
   ],
 })
-export class SmInputMultiSelectComponent {
+export class SmInputMultiSelectComponent implements OnInit, ControlValueAccessor {
   @Input() formControlName?: string;
   @Input() groupedOptionList?: InputSelectOptionsGroup[];
   @Input() hasClearOption: boolean = false;

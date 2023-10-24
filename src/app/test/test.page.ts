@@ -7,7 +7,7 @@ import { MovieService } from "../features/movie/services/movie.service";
   styles: [],
 })
 export class TestPage implements OnInit {
-  constructor(private movieService: MovieService) {}
+  constructor(private movieSRV: MovieService) {}
 
   ngOnInit(): void {}
 }

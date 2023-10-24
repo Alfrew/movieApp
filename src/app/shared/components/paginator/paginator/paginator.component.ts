@@ -11,7 +11,7 @@ export class PaginatorComponent {
   @Input() totalPages: number = 1;
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private appStatusService: AppStatusService) {}
+  constructor(private appStatusSRV: AppStatusService) {}
 
   changePage(newPage: number) {
     if (newPage < 1 || newPage > this.totalPages) {
@@ -19,6 +19,6 @@ export class PaginatorComponent {
     }
     this.page = newPage;
     this.pageChange.emit(this.page);
-    this.appStatusService.scrollToTop();
+    this.appStatusSRV.scrollToTop();
   }
 }

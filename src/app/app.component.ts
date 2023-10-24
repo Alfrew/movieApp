@@ -13,17 +13,17 @@ export class AppComponent implements OnInit {
   title = "movieApp";
   isSpinnerVisible = false;
 
-  constructor(private appStatusService: AppStatusService) {}
+  constructor(private appStatusSRV: AppStatusService) {}
 
   ngOnInit(): void {
     this.subscribeToService();
   }
 
   private subscribeToService() {
-    this.appStatusService.goToTop.subscribe(() => {
+    this.appStatusSRV.goToTop.subscribe(() => {
       this.scrollTop();
     });
-    this.appStatusService.isSpinnerVisible.subscribe((bool) => {
+    this.appStatusSRV.isSpinnerVisible.subscribe((bool) => {
       this.isSpinnerVisible = bool;
     });
   }

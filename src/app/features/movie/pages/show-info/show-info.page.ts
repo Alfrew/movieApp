@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Params } from "@angular/router";
 import { ShowService } from "../../services/show.service";
@@ -18,7 +18,7 @@ import { IMG_PATH } from "src/app/core/constants/httpConsts";
   templateUrl: "./show-info.page.html",
   styleUrls: ["./show-info.page.scss"],
 })
-export class ShowInfoPage {
+export class ShowInfoPage implements OnInit, OnDestroy {
   backdrops: ImageInfo[] = [];
   castCards: CardInfo[] = [];
   directors: CrewMember[] = [];
@@ -29,31 +29,35 @@ export class ShowInfoPage {
   producers: CrewMember[] = [];
   providers: StreamingProvider[] = [];
   seasonCards: CardInfo[] = [];
-  sub!: Subscription;
+  sub?: Subscription;
   writers: CrewMember[] = [];
 
-  constructor(private route: ActivatedRoute, private showService: ShowService) {}
+  constructor(private route: ActivatedRoute, private showSRV: ShowService) {}
 
   ngOnInit(): void {
     this.getGenres();
     this.onGetPath();
   }
 
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
   private getGenres() {
-    this.showService.getShowGenresList().subscribe((res) => {
+    this.showSRV.getShowGenresList().subscribe((res) => {
       this.showGenreList = res.genres;
     });
   }
 
   private getShow(id: number) {
-    this.showService.getShowById(id).subscribe((showData) => {
+    this.showSRV.getShowById(id).subscribe((showData) => {
       this.show = showData;
       this.seasonCards = this.mapSeasonToCard(showData.seasons);
     });
   }
 
   private getShowCredits(id: number) {
-    this.showService.getShowCredits(id).subscribe((showCredits) => {
+    this.showSRV.getShowCredits(id).subscribe((showCredits) => {
       this.castCards = this.mapCastToCard(showCredits.cast.slice(0, 14));
 
       this.directors = showCredits.crew.filter((crewMem: any) => {
@@ -69,14 +73,14 @@ export class ShowInfoPage {
   }
 
   private getShowImages(id: number) {
-    this.showService.getShowImages(id).subscribe((showImages) => {
+    this.showSRV.getShowImages(id).subscribe((showImages) => {
       this.backdrops = showImages.backdrops.slice(0, 29);
       this.posters = showImages.posters.slice(0, 29);
     });
   }
 
   private getShowRecomendations(id: number) {
-    this.showService.getShowRecomendations(id).subscribe((showData) => {
+    this.showSRV.getShowRecomendations(id).subscribe((showData) => {
       this.showRecomendations = this.mapShowToCard(showData.results);
     });
   }
@@ -86,11 +90,11 @@ export class ShowInfoPage {
    * @param id  the show Id
    */
   private getShowVideos(id: number) {
-    this.showService.getShowVideos(id).subscribe((showData) => {});
+    this.showSRV.getShowVideos(id).subscribe((showData) => {});
   }
 
   private getShowWatchProviders(id: number) {
-    this.showService.getShowWatchProviders(id).subscribe((showProviders) => {
+    this.showSRV.getShowWatchProviders(id).subscribe((showProviders) => {
       console.log(showProviders.results.US);
       if (showProviders.results.US.buy) {
         this.providers.push(

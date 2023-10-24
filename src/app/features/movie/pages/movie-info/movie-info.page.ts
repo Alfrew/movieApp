@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Params } from "@angular/router";
 import { MovieService } from "../../services/movie.service";
@@ -17,7 +17,7 @@ import { IMG_PATH } from "src/app/core/constants/httpConsts";
   templateUrl: "./movie-info.page.html",
   styleUrls: ["./movie-info.page.scss"],
 })
-export class MovieInfoPage implements OnInit {
+export class MovieInfoPage implements OnInit, OnDestroy {
   backdrops: ImageInfo[] = [];
   castCards: CardInfo[] = [];
   directors: CrewMember[] = [];
@@ -30,27 +30,31 @@ export class MovieInfoPage implements OnInit {
   sub!: Subscription;
   writers: CrewMember[] = [];
 
-  constructor(private route: ActivatedRoute, private movieService: MovieService) {}
+  constructor(private route: ActivatedRoute, private movieSRV: MovieService) {}
 
   ngOnInit(): void {
     this.getGenres();
     this.onGetPath();
   }
 
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
   private getGenres() {
-    this.movieService.getMovieGenresList().subscribe((res) => {
+    this.movieSRV.getMovieGenresList().subscribe((res) => {
       this.movieGenreList = res.genres;
     });
   }
 
   private getMovie(id: number) {
-    this.movieService.getMovieById(id).subscribe((movieData) => {
+    this.movieSRV.getMovieById(id).subscribe((movieData) => {
       this.movie = movieData;
     });
   }
 
   private getMovieCredits(id: number) {
-    this.movieService.getMovieCredits(id).subscribe((movieCredits) => {
+    this.movieSRV.getMovieCredits(id).subscribe((movieCredits) => {
       this.castCards = this.mapCastToCard(movieCredits.cast.slice(0, 14));
 
       this.directors = movieCredits.crew.filter((crewMem: any) => {
@@ -66,14 +70,14 @@ export class MovieInfoPage implements OnInit {
   }
 
   private getMovieImages(id: number) {
-    this.movieService.getMovieImages(id).subscribe((movieImages) => {
+    this.movieSRV.getMovieImages(id).subscribe((movieImages) => {
       this.backdrops = movieImages.backdrops.slice(0, 29);
       this.posters = movieImages.posters.slice(0, 29);
     });
   }
 
   private getMovieRecomendations(id: number) {
-    this.movieService.getMovieRecomendations(id).subscribe((movieData) => {
+    this.movieSRV.getMovieRecomendations(id).subscribe((movieData) => {
       this.movieRecomendations = this.mapMovieToCard(movieData.results);
     });
   }
@@ -83,11 +87,11 @@ export class MovieInfoPage implements OnInit {
    * @param id  the movie Id
    */
   private getMovieVideos(id: number) {
-    this.movieService.getMovieVideos(id).subscribe((movieData) => {});
+    this.movieSRV.getMovieVideos(id).subscribe((movieData) => {});
   }
 
   private getMovieWatchProviders(id: number) {
-    this.movieService.getMovieWatchProviders(id).subscribe((movieProviders) => {
+    this.movieSRV.getMovieWatchProviders(id).subscribe((movieProviders) => {
       console.log(movieProviders.results.US);
       if (movieProviders.results.US.buy) {
         this.providers.push(
