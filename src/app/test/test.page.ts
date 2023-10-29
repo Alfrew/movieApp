@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { MovieService } from "../features/browse/services/movie.service";
 
 @Component({
   selector: "page-test",
@@ -7,7 +6,7 @@ import { MovieService } from "../features/browse/services/movie.service";
   styles: [],
 })
 export class TestPage implements OnInit {
-  constructor(private movieSRV: MovieService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }

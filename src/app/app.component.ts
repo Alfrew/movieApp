@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { interval as observableInterval } from "rxjs";
 import { takeWhile, scan, tap } from "rxjs/operators";
-import { AppStatusService } from "./core/services/app-status.service";
+
+import { AppStatusService } from "@core";
 
 @Component({
   selector: "app-root",

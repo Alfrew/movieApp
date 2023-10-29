@@ -1,19 +1,19 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
 import { FormsModule } from "@angular/forms";
-import { FiltersComponent } from "./components/filters/filters.component";
-import { FiltersBottomSheetComponent } from "./components/filters-bottom-sheet/filters-bottom-sheet.component";
-import { BrowseRoutingModule } from "./browse-routing.module";
-import { MovieInfoPage } from "./pages/movie-info/movie-info.page";
-import { MoviesPage } from "./pages/movies/movies.page";
-import { ProviderElementComponent } from "./components/provider-element/provider-element.component";
-import { ShowsPage } from "./pages/shows/shows.page";
-import { ShowInfoPage } from "./pages/show-info/show-info.page";
 
 import { MatIconModule } from "@angular/material/icon";
 import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+
+import { BrowseRoutingModule } from "./browse-routing.module";
+import { FiltersBottomSheetComponent } from "./components/filters-bottom-sheet/filters-bottom-sheet.component";
+import { FiltersComponent } from "./components/filters/filters.component";
+import { MovieInfoPage } from "./pages/movie-info/movie-info.page";
+import { MoviesPage } from "./pages/movies/movies.page";
+import { ProviderElementComponent } from "./components/provider-element/provider-element.component";
+import { ShowInfoPage } from "./pages/show-info/show-info.page";
+import { ShowsPage } from "./pages/shows/shows.page";
 
 import { ElementCardModule } from "src/app/shared/components/element-card/element-card.module";
 import { ImageModule } from "src/app/shared/components/image/s-image.module";
@@ -31,8 +31,9 @@ import { SmInputNumberModule } from "src/app/shared/inputs/sm-input-number/sm-in
 import { SmInputSelectModule } from "src/app/shared/inputs/sm-input-select/sm-input-select.module";
 
 @NgModule({
-  declarations: [MoviesPage, ShowsPage, FiltersComponent, FiltersBottomSheetComponent, MovieInfoPage, ProviderElementComponent, ShowInfoPage],
+  declarations: [FiltersBottomSheetComponent, FiltersComponent, MovieInfoPage, MoviesPage, ProviderElementComponent, ShowInfoPage, ShowsPage],
   imports: [
+    BrowseRoutingModule,
     CommonModule,
     ElementCardModule,
     FormsModule,
@@ -43,7 +44,6 @@ import { SmInputSelectModule } from "src/app/shared/inputs/sm-input-select/sm-in
     MatIconModule,
     MatSlideToggleModule,
     MinutesConverterPipeModule,
-    BrowseRoutingModule,
     NumberSuffixPipeModule,
     PaginatorModule,
     ScmInputSelectModule,

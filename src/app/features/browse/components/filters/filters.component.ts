@@ -1,10 +1,9 @@
-import { Genre } from "../../models/genre";
-import { Filters } from "../../models/filters";
-import { MatBottomSheet } from "@angular/material/bottom-sheet";
-import { Sharedfunctions } from "src/app/core/utils/sharedFunctions";
 import { Component, Input, Output, EventEmitter, OnDestroy } from "@angular/core";
-import { FiltersBottomSheetComponent } from "../filters-bottom-sheet/filters-bottom-sheet.component";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { Subscription } from "rxjs";
+
+import { Sharedfunctions } from "@core";
+import { Filters, FiltersBottomSheetComponent, Genre } from "@browse";
 
 @Component({
   selector: "app-filters",

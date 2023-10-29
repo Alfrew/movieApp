@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { StreamingProvider } from "../../models/streaming-provider";
+
+import { StreamingProvider } from "@browse";
 
 @Component({
   selector: "app-provider-element",

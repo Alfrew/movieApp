@@ -1,13 +1,8 @@
-import { Movie } from "../../models/movie";
-import { Genre } from "../../models/genre";
 import { Component, OnInit } from "@angular/core";
-import { CardCta, CardInfo } from "../../models/card";
-import { MovieService } from "../../services/movie.service";
-import { Filters, MovieRequestType } from "../../models/filters";
-import { Sharedfunctions } from "src/app/core/utils/sharedFunctions";
-import { InputSelectOption } from "src/app/shared/utils/input-select-utils";
-import { AppStatusService } from "src/app/core/services/app-status.service";
-import { IMG_PATH } from "src/app/core/constants/httpConsts";
+
+import { CardCta, CardInfo, Filters, Genre, MovieRequestType, MovieService } from "@browse";
+import { AppStatusService, Sharedfunctions } from "@core";
+import { InputSelectOption } from "@shared";
 
 @Component({
   templateUrl: "./movies.page.html",

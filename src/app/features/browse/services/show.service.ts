@@ -1,13 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Filters, ShowRequestType } from "../models/filters";
-import { Genre } from "../models/genre";
-import { Show } from "../models/show";
-import { CrewMember } from "../models/crew-member";
-import { CastMember } from "../models/cast-member";
-import { ImageInfo } from "../models/image-info";
-import { ShowInfo } from "../models/show-info";
-import { API_KEY, API_URL_HEADER } from "src/app/core/constants/httpConsts";
+
+import { CastMember, CrewMember, Filters, Genre, ImageInfo, Show, ShowInfo, ShowRequestType } from "@browse";
+import { API_KEY, API_URL_HEADER } from "@core";
 
 @Injectable({
   providedIn: "root",

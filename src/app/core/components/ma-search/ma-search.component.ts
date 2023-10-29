@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subject, Subscription, debounceTime, distinctUntilChanged } from "rxjs";
-import { Movie } from "src/app/features/browse/models/movie";
-import { Show } from "src/app/features/browse/models/show";
-import { MovieService } from "src/app/features/browse/services/movie.service";
-import { ShowService } from "src/app/features/browse/services/show.service";
+
+import { Movie, MovieService, Show, ShowService } from "@browse";
 
 @Component({
   selector: "app-ma-search",

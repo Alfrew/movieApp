@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { CardCta, CardInfo } from "../../../../features/browse/models/card";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+
+import { CardCta, CardInfo } from "@browse";
 
 @Component({
   selector: "app-element-card",

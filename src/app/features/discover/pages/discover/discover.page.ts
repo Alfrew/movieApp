@@ -1,15 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { IMG_PATH } from "src/app/core/constants/httpConsts";
-import { AppStatusService } from "src/app/core/services/app-status.service";
-import { Sharedfunctions } from "src/app/core/utils/sharedFunctions";
-import { CardInfo } from "src/app/features/browse/models/card";
-import { Filters } from "src/app/features/browse/models/filters";
-import { Genre } from "src/app/features/browse/models/genre";
-import { Movie } from "src/app/features/browse/models/movie";
-import { MovieInfo } from "src/app/features/browse/models/movie-info";
-import { Show } from "src/app/features/browse/models/show";
-import { MovieService } from "src/app/features/browse/services/movie.service";
-import { ShowService } from "src/app/features/browse/services/show.service";
+
+import { CardInfo, Filters, Genre, MovieInfo, MovieService, ShowService } from "@browse";
+import { AppStatusService, IMG_PATH, Sharedfunctions } from "@core";
 
 @Component({
   templateUrl: "./discover.page.html",

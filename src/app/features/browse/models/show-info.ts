@@ -1,9 +1,4 @@
-import { Genre } from "./genre";
-import { Language } from "./language";
-import { ProductionCompany } from "./production-company";
-import { ProductionCountry } from "./production-country";
-import { ShowEpisode } from "./show-episode";
-import { ShowSeason } from "./show-season";
+import { Genre, Language, ProductionCompany, ProductionCountry, ShowEpisode, ShowSeason } from "@browse";
 
 export interface ShowInfo {
   adult: false;

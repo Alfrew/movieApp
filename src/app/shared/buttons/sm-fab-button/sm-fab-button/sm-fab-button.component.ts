@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { matColor } from "src/app/shared/utils/button-utils";
+
+import { matColor } from "@shared";
 
 @Component({
   selector: "sm-fab-button",

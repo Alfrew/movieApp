@@ -1,19 +1,9 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
-import { ShowService } from "../../services/show.service";
-import { ShowInfo } from "../../models/show-info";
-import { CrewMember } from "../../models/crew-member";
-import { ImageInfo } from "../../models/image-info";
-import { CardInfo } from "../../models/card";
-import { Show } from "../../models/show";
-import { Sharedfunctions } from "src/app/core/utils/sharedFunctions";
-import { Genre } from "../../models/genre";
-import { StreamingProvider } from "../../models/streaming-provider";
-import { CastMember } from "../../models/cast-member";
-import { ShowSeason } from "../../models/show-season";
-import { IMG_PATH } from "src/app/core/constants/httpConsts";
-import { AppStatusService } from "src/app/core/services/app-status.service";
+import { Subscription } from "rxjs";
+
+import { CardInfo, CrewMember, Genre, ImageInfo, ShowInfo, ShowSeason, ShowService, StreamingProvider } from "@browse";
+import { AppStatusService, IMG_PATH, Sharedfunctions } from "@core";
 
 @Component({
   templateUrl: "./show-info.page.html",

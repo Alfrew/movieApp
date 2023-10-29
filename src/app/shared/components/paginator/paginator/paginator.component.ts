@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { AppStatusService } from "src/app/core/services/app-status.service";
+
+import { AppStatusService } from "@core";
 
 @Component({
   selector: "app-paginator",

@@ -1,13 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { ShowService } from "../../services/show.service";
-import { AppStatusService } from "src/app/core/services/app-status.service";
-import { InputSelectOption } from "src/app/shared/utils/input-select-utils";
-import { CardCta, CardInfo } from "../../models/card";
-import { Filters, ShowRequestType } from "../../models/filters";
-import { Genre } from "../../models/genre";
-import { Sharedfunctions } from "src/app/core/utils/sharedFunctions";
-import { Show } from "../../models/show";
-import { IMG_PATH } from "src/app/core/constants/httpConsts";
+
+import { CardCta, CardInfo, Filters, Genre, ShowRequestType, ShowService } from "@browse";
+import { AppStatusService, Sharedfunctions } from "@core";
+import { InputSelectOption } from "@shared";
 
 @Component({
   templateUrl: "./shows.page.html",

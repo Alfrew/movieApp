@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { InputSelectOption } from "src/app/shared/utils/input-select-utils";
-import { Filters } from "../../models/filters";
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from "@angular/material/bottom-sheet";
-import { Genre } from "../../models/genre";
-import { Sharedfunctions } from "src/app/core/utils/sharedFunctions";
+
+import { Filters, Genre } from "@browse";
+import { Sharedfunctions } from "@core";
+import { InputSelectOption } from "@shared";
 
 @Component({
   selector: "app-filters-bottom-sheet",

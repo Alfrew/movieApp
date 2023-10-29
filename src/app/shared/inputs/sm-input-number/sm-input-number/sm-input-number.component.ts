@@ -1,5 +1,5 @@
-import { Component, forwardRef, Host, Input, Optional, OnInit, SkipSelf, Output, EventEmitter } from "@angular/core";
-import { NG_VALUE_ACCESSOR, ControlContainer, FormControl, ControlValueAccessor } from "@angular/forms";
+import { Component, EventEmitter, forwardRef, Host, Input, OnInit, Optional, Output, SkipSelf } from "@angular/core";
+import { ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
   selector: "sm-input-number",

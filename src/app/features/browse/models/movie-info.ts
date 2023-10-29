@@ -1,8 +1,4 @@
-import { Genre } from "./genre";
-import { Language } from "./language";
-import { MovieCollection } from "./movie-collection";
-import { ProductionCompany } from "./production-company";
-import { ProductionCountry } from "./production-country";
+import { Genre, Language, MovieCollection, ProductionCompany, ProductionCountry } from "@browse";
 
 export interface MovieInfo {
   adult: boolean;

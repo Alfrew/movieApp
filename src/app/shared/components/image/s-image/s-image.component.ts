@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { IMG_PATH } from "src/app/core/constants/httpConsts";
+
+import { IMG_PATH } from "@core";
 
 @Component({
   selector: "s-image",
