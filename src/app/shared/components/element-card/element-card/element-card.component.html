@@ -8,7 +8,7 @@
       </div>
 
       <div *ngIf="card.info || card.ctas" class="element-card-footer">
-        <span *ngIf="card.info" class="info">* {{card.info}}</span>
+        <span *ngIf="card.info" class="info">★ {{card.info}}</span>
         <div *ngIf="card.ctas" class="cta">
           <sm-icon-button *ngFor="let cta of card.ctas" [color]="cta.isActive ? 'primary':undefined" [icon]="cta.isActive ? cta.iconFill: cta.iconEmpty" (buttonClick)="emitClick(cta)"></sm-icon-button>
         </div>

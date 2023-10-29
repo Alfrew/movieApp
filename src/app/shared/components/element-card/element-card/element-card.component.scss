@@ -41,13 +41,14 @@
   .element-card-footer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     color: $primary-text-color;
 
     .info {
       background-color: $primary-color;
       outline: 4px solid black;
       border-radius: 4px;
+      margin-bottom: 10.5px;
       padding: 4px 8px;
       font-weight: 600;
     }

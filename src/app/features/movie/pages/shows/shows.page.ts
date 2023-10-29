@@ -52,7 +52,7 @@ export class ShowsPage implements OnInit {
     this.getShows();
   }
 
-  filtersChanged(selectedFilters: Filters) {
+  public filtersChanged(selectedFilters: Filters) {
     this.filters = Object.assign({}, selectedFilters);
     this.requestType = "general";
     this.filters.page = 1;
@@ -60,28 +60,12 @@ export class ShowsPage implements OnInit {
     this.getShows();
   }
 
-  getShows() {
-    this.appStatusSRV.showSpinner();
-    this.showSRV.getShowList(this.filters, this.requestType).subscribe({
-      next: (res) => {
-        this.showCardList.push(...this.mapShowToCard(res.results));
-        this.totalPages = res.total_pages < 500 ? res.total_pages : 500;
-      },
-      complete: () => {
-        this.appStatusSRV.hideSpinner();
-      },
-      error: () => {
-        this.appStatusSRV.hideSpinner();
-      },
-    });
-  }
-
-  loadMore() {
+  public loadMore() {
     this.filters.page++;
     this.getShows();
   }
 
-  requestChanged() {
+  public requestChanged() {
     this.filters = {
       include_adult: false,
       language: "en-US",
@@ -98,19 +82,19 @@ export class ShowsPage implements OnInit {
     });
   }
 
-  private mapShowToCard(showList: Show[]): CardInfo[] {
-    let cardList: CardInfo[] = [];
-    showList.forEach((show) => {
-      let card: CardInfo = {
-        backgroundPath: IMG_PATH + show.poster_path,
-        ctas: this.showCta,
-        id: show.id,
-        info: `${show.vote_average}/10`,
-        subtitle: `${show.first_air_date} * ${Sharedfunctions.returnGenreById(this.showGenreList, show.genre_ids[0])}`,
-        title: show.name,
-      };
-      cardList.push(card);
+  private getShows() {
+    this.appStatusSRV.showSpinner();
+    this.showSRV.getShowList(this.filters, this.requestType).subscribe({
+      next: (res) => {
+        this.showCardList.push(...Sharedfunctions.mapShowToCard(res.results, this.showGenreList));
+        this.totalPages = res.total_pages < 500 ? res.total_pages : 500;
+      },
+      complete: () => {
+        this.appStatusSRV.hideSpinner();
+      },
+      error: () => {
+        this.appStatusSRV.hideSpinner();
+      },
     });
-    return cardList;
   }
 }

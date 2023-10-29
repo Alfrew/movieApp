@@ -58,7 +58,7 @@ export class ShowInfoPage implements OnInit, OnDestroy {
 
   private getShowCredits(id: number) {
     this.showSRV.getShowCredits(id).subscribe((showCredits) => {
-      this.castCards = this.mapCastToCard(showCredits.cast.slice(0, 14));
+      this.castCards = Sharedfunctions.mapCastToCard(showCredits.cast.slice(0, 14));
 
       this.directors = showCredits.crew.filter((crewMem: any) => {
         return crewMem.job == "Director";
@@ -81,7 +81,7 @@ export class ShowInfoPage implements OnInit, OnDestroy {
 
   private getShowRecomendations(id: number) {
     this.showSRV.getShowRecomendations(id).subscribe((showData) => {
-      this.showRecomendations = this.mapShowToCard(showData.results);
+      this.showRecomendations = Sharedfunctions.mapShowToCard(showData.results, this.showGenreList);
     });
   }
 
@@ -115,20 +115,6 @@ export class ShowInfoPage implements OnInit, OnDestroy {
     });
   }
 
-  private mapCastToCard(castList: CastMember[]): CardInfo[] {
-    let cardList: CardInfo[] = [];
-    castList.forEach((castMember) => {
-      let card: CardInfo = {
-        backgroundPath: IMG_PATH + castMember.profile_path,
-        id: castMember.id,
-        subtitle: castMember.character,
-        title: castMember.name,
-      };
-      cardList.push(card);
-    });
-    return cardList;
-  }
-
   private mapSeasonToCard(seasonList: ShowSeason[]): CardInfo[] {
     let cardList: CardInfo[] = [];
     seasonList.forEach((season) => {
@@ -137,21 +123,6 @@ export class ShowInfoPage implements OnInit, OnDestroy {
         id: season.id,
         subtitle: `${season.episode_count} Episodes`,
         title: season.name,
-      };
-      cardList.push(card);
-    });
-    return cardList;
-  }
-
-  private mapShowToCard(showList: Show[]): CardInfo[] {
-    let cardList: CardInfo[] = [];
-    showList.forEach((show) => {
-      let card: CardInfo = {
-        backgroundPath: IMG_PATH + show.poster_path,
-        id: show.id,
-        info: `${show.vote_average}/10`,
-        subtitle: `${show.first_air_date} * ${Sharedfunctions.returnGenreById(this.showGenreList, show.genre_ids[0])}`,
-        title: show.name,
       };
       cardList.push(card);
     });

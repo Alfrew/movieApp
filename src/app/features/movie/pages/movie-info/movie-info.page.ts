@@ -55,7 +55,7 @@ export class MovieInfoPage implements OnInit, OnDestroy {
 
   private getMovieCredits(id: number) {
     this.movieSRV.getMovieCredits(id).subscribe((movieCredits) => {
-      this.castCards = this.mapCastToCard(movieCredits.cast.slice(0, 14));
+      this.castCards = Sharedfunctions.mapCastToCard(movieCredits.cast.slice(0, 14));
 
       this.directors = movieCredits.crew.filter((crewMem: any) => {
         return crewMem.job == "Director";
@@ -78,7 +78,7 @@ export class MovieInfoPage implements OnInit, OnDestroy {
 
   private getMovieRecomendations(id: number) {
     this.movieSRV.getMovieRecomendations(id).subscribe((movieData) => {
-      this.movieRecomendations = this.mapMovieToCard(movieData.results);
+      this.movieRecomendations = Sharedfunctions.mapMovieToCard(movieData.results, this.movieGenreList);
     });
   }
 
@@ -110,35 +110,6 @@ export class MovieInfoPage implements OnInit, OnDestroy {
         );
       }
     });
-  }
-
-  private mapCastToCard(castList: CastMember[]): CardInfo[] {
-    let cardList: CardInfo[] = [];
-    castList.forEach((castMember) => {
-      let card: CardInfo = {
-        backgroundPath: IMG_PATH + castMember.profile_path,
-        id: castMember.id,
-        subtitle: castMember.character,
-        title: castMember.name,
-      };
-      cardList.push(card);
-    });
-    return cardList;
-  }
-
-  private mapMovieToCard(movieList: Movie[]): CardInfo[] {
-    let cardList: CardInfo[] = [];
-    movieList.forEach((movie) => {
-      let card: CardInfo = {
-        backgroundPath: IMG_PATH + movie.poster_path,
-        id: movie.id,
-        info: `${movie.vote_average}/10`,
-        subtitle: `${movie.release_date} * ${Sharedfunctions.returnGenreById(this.movieGenreList, movie.genre_ids[0])}`,
-        title: movie.title,
-      };
-      cardList.push(card);
-    });
-    return cardList;
   }
 
   private onGetPath() {

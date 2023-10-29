@@ -74,7 +74,7 @@
   <!-- Recomendations ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
   <app-ma-section *ngIf="showRecomendations.length>0" sectionTitle="Show Recomendations">
     <div class="media-flex">
-      <app-element-card *ngFor="let card of showRecomendations" [card]="card"></app-element-card>
+      <app-element-card *ngFor="let card of showRecomendations" [card]="card" [routerLink]="['/browse/shows', card.id]"></app-element-card>
     </div>
   </app-ma-section>
 </div>

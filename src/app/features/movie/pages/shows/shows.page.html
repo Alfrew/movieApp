@@ -12,8 +12,7 @@
 </div>
 
 <div class="card-container">
-  <app-element-card class="card" *ngFor="let card of showCardList" [card]="card"></app-element-card>
-  <!-- <app-element-card class="card" *ngFor="let card of showCardList" [card]="card" [routerLink]="['/browse/shows', card.id]"></app-element-card> -->
+  <app-element-card class="card" *ngFor="let card of showCardList" [card]="card" [routerLink]="['/browse/shows', card.id]"></app-element-card>
 </div>
 
 <div class="load-more-container">
