@@ -1,4 +1,4 @@
-<div class="header-container">
+<div class="browse-header-container">
   <div class="title">
     <h1>Movies</h1>
     <scm-input-select [optionList]="movieRequestList" [(value)]="requestType" (valueChange)="requestChanged()"></scm-input-select>
@@ -7,11 +7,11 @@
   <p>{{date}}</p>
 </div>
 
-<div class="filters-container">
+<div class="browse-filters-container">
   <app-filters [genreList]="movieGenreList" [currentFilters]="filters" (filtersChange)="filtersChanged($event)"></app-filters>
 </div>
 
-<div class="card-container">
+<div class="browse-card-container">
   <app-element-card class="card" *ngFor="let card of movieCardList" [card]="card" [routerLink]="['/browse/movies', card.id]"></app-element-card>
 </div>
 

@@ -1,9 +1,9 @@
 <div *ngIf="show">
-  <div class="backdrop-wrapper">
+  <div class="info-backdrop-wrapper">
     <s-image [imagePath]="show.backdrop_path"></s-image>
   </div>
 
-  <div class="main-section">
+  <div class="info-main-section">
     <h1 class="main-title">{{ show.name }}</h1>
     <p class="main-info">{{ show.first_air_date | date:"yyyy" }}, <span *ngFor="let genre of show.genres, index as i">{{genre.name}}{{ i < show.genres.length-1 ? "/" : "," }}</span> {{ show.number_of_seasons }} Seasons
     </p>
@@ -47,7 +47,7 @@
 
   <!-- Show info /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
   <app-ma-section sectionTitle="Show info">
-    <div class="show-info">
+    <div class="info-list">
       <p>{{show.overview}}</p>
       <ul>
         <li>

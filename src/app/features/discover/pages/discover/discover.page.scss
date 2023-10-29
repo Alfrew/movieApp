@@ -1,5 +1,5 @@
 @import "/src/assets/styles/variables.scss";
-.header-wrapper {
+.discover-header-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,13 +14,7 @@
   color: $primary-text-color;
 }
 
-.media-flex {
-  display: flex;
-  gap: 12px;
-  padding: 12px 0;
-}
-
-.header-container {
+.discover-header-container {
   position: relative;
   z-index: 1;
   margin: 0 auto;
@@ -33,19 +27,5 @@
   p {
     font-size: 1.5rem;
     margin: 0;
-  }
-}
-
-.overlay-black {
-  position: relative;
-  z-index: 0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
   }
 }

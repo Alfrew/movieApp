@@ -22,6 +22,10 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+a {
+  color: $link-color;
+  text-decoration: none;
+}
 
 /* width */
 ::-webkit-scrollbar {
@@ -48,11 +52,124 @@ body {
   margin-bottom: 22px;
 }
 
+/* Various common classes */
+
 .pointer {
   cursor: pointer;
 }
 
-a {
-  color: $link-color;
-  text-decoration: none;
+.overlay-black {
+  position: relative;
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.media-flex {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+/* Info pages classes */
+.info-list {
+  ul {
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.info-backdrop-wrapper {
+  border-radius: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.info-main-section {
+  background-color: $background-color;
+  border-radius: 16px;
+  margin-bottom: 40px;
+  padding: 32px 16px;
+  color: $text-color;
+  text-align: center;
+
+  .main-title {
+    margin: 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+  }
+  .main-info {
+    margin: 0 0 12px;
+    font-size: 0.95rem;
+  }
+  .votes-container {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      margin: 0;
+      text-align: start;
+    }
+    .vote-average {
+      font-size: 2rem;
+    }
+    .vote-description {
+      font-size: 1.2rem;
+    }
+    .vote-count {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+/* Browse pages classes */
+.browse-header-container {
+  margin-bottom: 32px;
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+    }
+  }
+
+  p {
+    margin: 0;
+    color: $neutral-color;
+  }
+}
+
+.browse-filters-container {
+  margin-bottom: 16px;
+}
+
+.browse-card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  .card {
+    flex: 1;
+  }
+}
+
+.load-more-container {
+  padding: 24px 0;
+  text-align: center;
 }

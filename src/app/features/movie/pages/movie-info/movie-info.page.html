@@ -1,9 +1,9 @@
 <div *ngIf="movie">
-  <div class="backdrop-wrapper">
+  <div class="info-backdrop-wrapper">
     <s-image [imagePath]="movie.backdrop_path"></s-image>
   </div>
 
-  <div class="main-section">
+  <div class="info-main-section">
     <h1 class="main-title">{{ movie.title }}</h1>
     <p class="main-info">{{ movie.release_date | date:"yyyy" }}, <span *ngFor="let genre of movie.genres, index as i">{{genre.name}}{{ i < movie.genres.length-1 ? "/" : "," }}</span> {{ movie.runtime | minutesConverter }}</p>
     <div class="votes-container">
@@ -39,7 +39,7 @@
 
   <!-- Movie info ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
   <app-ma-section sectionTitle="Movie info">
-    <div class="movie-info">
+    <div class="info-list">
       <p>{{movie.overview}}</p>
       <ul>
         <li>
