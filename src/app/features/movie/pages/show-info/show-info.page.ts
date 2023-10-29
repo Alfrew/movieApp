@@ -13,6 +13,7 @@ import { StreamingProvider } from "../../models/streaming-provider";
 import { CastMember } from "../../models/cast-member";
 import { ShowSeason } from "../../models/show-season";
 import { IMG_PATH } from "src/app/core/constants/httpConsts";
+import { AppStatusService } from "src/app/core/services/app-status.service";
 
 @Component({
   templateUrl: "./show-info.page.html",
@@ -23,6 +24,7 @@ export class ShowInfoPage implements OnInit, OnDestroy {
   castCards: CardInfo[] = [];
   directors: CrewMember[] = [];
   show?: ShowInfo;
+  showId!: number;
   showGenreList: Genre[] = [];
   showRecomendations: CardInfo[] = [];
   posters: ImageInfo[] = [];
@@ -32,7 +34,7 @@ export class ShowInfoPage implements OnInit, OnDestroy {
   sub?: Subscription;
   writers: CrewMember[] = [];
 
-  constructor(private route: ActivatedRoute, private showSRV: ShowService) {}
+  constructor(private appStatusSRV: AppStatusService, private route: ActivatedRoute, private showSRV: ShowService) {}
 
   ngOnInit(): void {
     this.getGenres();
@@ -44,44 +46,80 @@ export class ShowInfoPage implements OnInit, OnDestroy {
   }
 
   private getGenres() {
-    this.showSRV.getShowGenresList().subscribe((res) => {
-      this.showGenreList = res.genres;
+    this.showSRV.getShowGenresList().subscribe({
+      next: (res) => {
+        this.showGenreList = res.genres;
+      },
+      complete: () => {},
+      error: () => {},
     });
   }
 
-  private getShow(id: number) {
-    this.showSRV.getShowById(id).subscribe((showData) => {
-      this.show = showData;
-      this.seasonCards = this.mapSeasonToCard(showData.seasons);
+  private getShow() {
+    this.showSRV.getShowById(this.showId).subscribe({
+      next: (showData) => {
+        this.show = showData;
+        this.seasonCards = this.mapSeasonToCard(showData.seasons);
+      },
+      complete: () => {
+        this.getShowWatchProviders();
+      },
+      error: () => {
+        this.getShowWatchProviders();
+      },
     });
   }
 
-  private getShowCredits(id: number) {
-    this.showSRV.getShowCredits(id).subscribe((showCredits) => {
-      this.castCards = Sharedfunctions.mapCastToCard(showCredits.cast.slice(0, 14));
+  private getShowCredits() {
+    this.showSRV.getShowCredits(this.showId).subscribe({
+      next: (showCredits) => {
+        this.castCards = Sharedfunctions.mapCastToCard(showCredits.cast.slice(0, 14));
 
-      this.directors = showCredits.crew.filter((crewMem: any) => {
-        return crewMem.job == "Director";
-      });
-      this.producers = showCredits.crew.filter((crewMem: any) => {
-        return crewMem.job == "Producer";
-      });
-      this.writers = showCredits.crew.filter((crewMem: any) => {
-        return crewMem.job == "Writer";
-      });
+        this.directors = showCredits.crew.filter((crewMem: any) => {
+          return crewMem.job == "Director";
+        });
+        this.producers = showCredits.crew.filter((crewMem: any) => {
+          return crewMem.job == "Producer";
+        });
+        this.writers = showCredits.crew.filter((crewMem: any) => {
+          return crewMem.job == "Writer";
+        });
+      },
+      complete: () => {
+        this.getShowRecomendations();
+      },
+      error: () => {
+        this.getShowRecomendations();
+      },
     });
   }
 
-  private getShowImages(id: number) {
-    this.showSRV.getShowImages(id).subscribe((showImages) => {
-      this.backdrops = showImages.backdrops.slice(0, 29);
-      this.posters = showImages.posters.slice(0, 29);
+  private getShowImages() {
+    this.showSRV.getShowImages(this.showId).subscribe({
+      next: (showImages) => {
+        this.backdrops = showImages.backdrops.slice(0, 29);
+        this.posters = showImages.posters.slice(0, 29);
+      },
+      complete: () => {
+        this.getShowCredits();
+      },
+      error: () => {
+        this.getShowCredits();
+      },
     });
   }
 
-  private getShowRecomendations(id: number) {
-    this.showSRV.getShowRecomendations(id).subscribe((showData) => {
-      this.showRecomendations = Sharedfunctions.mapShowToCard(showData.results, this.showGenreList);
+  private getShowRecomendations() {
+    this.showSRV.getShowRecomendations(this.showId).subscribe({
+      next: (showData) => {
+        this.showRecomendations = Sharedfunctions.mapShowToCard(showData.results, this.showGenreList);
+      },
+      complete: () => {
+        this.appStatusSRV.hideSpinner();
+      },
+      error: () => {
+        this.appStatusSRV.hideSpinner();
+      },
     });
   }
 
@@ -89,29 +127,37 @@ export class ShowInfoPage implements OnInit, OnDestroy {
    * @deprecated can't be used since it doesn't return neither a link or video to watch
    * @param id  the show Id
    */
-  private getShowVideos(id: number) {
-    this.showSRV.getShowVideos(id).subscribe((showData) => {});
+  private getShowVideos() {
+    this.showSRV.getShowVideos(this.showId).subscribe((showData) => {});
   }
 
-  private getShowWatchProviders(id: number) {
-    this.showSRV.getShowWatchProviders(id).subscribe((showProviders) => {
-      console.log(showProviders.results.US);
-      if (showProviders.results.US.buy) {
-        this.providers.push(
-          ...showProviders.results.US.buy.map((prov: StreamingProvider) => {
-            prov.logo_path = IMG_PATH + prov.logo_path;
-            return prov;
-          })
-        );
-      }
-      if (showProviders.results.US.flatrate) {
-        this.providers.push(
-          ...showProviders.results.US.flatrate.map((prov: StreamingProvider) => {
-            prov.logo_path = IMG_PATH + prov.logo_path;
-            return prov;
-          })
-        );
-      }
+  private getShowWatchProviders() {
+    this.showSRV.getShowWatchProviders(this.showId).subscribe({
+      next: (showProviders) => {
+        console.log(showProviders.results.US);
+        if (showProviders.results.US.buy) {
+          this.providers.push(
+            ...showProviders.results.US.buy.map((prov: StreamingProvider) => {
+              prov.logo_path = IMG_PATH + prov.logo_path;
+              return prov;
+            })
+          );
+        }
+        if (showProviders.results.US.flatrate) {
+          this.providers.push(
+            ...showProviders.results.US.flatrate.map((prov: StreamingProvider) => {
+              prov.logo_path = IMG_PATH + prov.logo_path;
+              return prov;
+            })
+          );
+        }
+      },
+      complete: () => {
+        this.getShowImages();
+      },
+      error: () => {
+        this.getShowImages();
+      },
     });
   }
 
@@ -131,12 +177,8 @@ export class ShowInfoPage implements OnInit, OnDestroy {
 
   private onGetPath() {
     this.sub = this.route.params.subscribe((params: Params) => {
-      const id = +params["id"];
-      this.getShow(id);
-      this.getShowCredits(id);
-      this.getShowImages(id);
-      this.getShowRecomendations(id);
-      this.getShowWatchProviders(id);
+      this.showId = +params["id"];
+      this.getShow();
     });
   }
 }

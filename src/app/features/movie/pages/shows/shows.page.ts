@@ -49,7 +49,6 @@ export class ShowsPage implements OnInit {
 
   ngOnInit(): void {
     this.getGenres();
-    this.getShows();
   }
 
   public filtersChanged(selectedFilters: Filters) {
@@ -77,8 +76,14 @@ export class ShowsPage implements OnInit {
   }
 
   private getGenres() {
-    this.showSRV.getShowGenresList().subscribe((res) => {
-      this.showGenreList = res.genres;
+    this.appStatusSRV.showSpinner();
+    this.showSRV.getShowGenresList().subscribe({
+      next: (res) => {
+        this.showGenreList = res.genres;
+      },
+      complete: () => {
+        this.getShows();
+      },
     });
   }
 

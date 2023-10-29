@@ -12,6 +12,7 @@ import { Genre } from "../../models/genre";
 import { StreamingProvider } from "../../models/streaming-provider";
 import { CastMember } from "../../models/cast-member";
 import { IMG_PATH } from "src/app/core/constants/httpConsts";
+import { AppStatusService } from "src/app/core/services/app-status.service";
 
 @Component({
   templateUrl: "./movie-info.page.html",
@@ -22,6 +23,7 @@ export class MovieInfoPage implements OnInit, OnDestroy {
   castCards: CardInfo[] = [];
   directors: CrewMember[] = [];
   movie?: MovieInfo;
+  movieId!: number;
   movieGenreList: Genre[] = [];
   movieRecomendations: CardInfo[] = [];
   posters: ImageInfo[] = [];
@@ -30,7 +32,7 @@ export class MovieInfoPage implements OnInit, OnDestroy {
   sub!: Subscription;
   writers: CrewMember[] = [];
 
-  constructor(private route: ActivatedRoute, private movieSRV: MovieService) {}
+  constructor(private appStatusSRV: AppStatusService, private route: ActivatedRoute, private movieSRV: MovieService) {}
 
   ngOnInit(): void {
     this.getGenres();
@@ -42,43 +44,80 @@ export class MovieInfoPage implements OnInit, OnDestroy {
   }
 
   private getGenres() {
-    this.movieSRV.getMovieGenresList().subscribe((res) => {
-      this.movieGenreList = res.genres;
+    this.appStatusSRV.showSpinner();
+    this.movieSRV.getMovieGenresList().subscribe({
+      next: (res) => {
+        this.movieGenreList = res.genres;
+      },
+      complete: () => {},
+      error: () => {},
     });
   }
 
-  private getMovie(id: number) {
-    this.movieSRV.getMovieById(id).subscribe((movieData) => {
-      this.movie = movieData;
+  private getMovie() {
+    this.movieSRV.getMovieById(this.movieId).subscribe({
+      next: (movieData) => {
+        this.movie = movieData;
+      },
+      complete: () => {
+        this.getMovieWatchProviders();
+      },
+      error: () => {
+        this.getMovieWatchProviders();
+      },
     });
   }
 
-  private getMovieCredits(id: number) {
-    this.movieSRV.getMovieCredits(id).subscribe((movieCredits) => {
-      this.castCards = Sharedfunctions.mapCastToCard(movieCredits.cast.slice(0, 14));
+  private getMovieCredits() {
+    this.movieSRV.getMovieCredits(this.movieId).subscribe({
+      next: (movieCredits) => {
+        this.castCards = Sharedfunctions.mapCastToCard(movieCredits.cast.slice(0, 14));
 
-      this.directors = movieCredits.crew.filter((crewMem: any) => {
-        return crewMem.job == "Director";
-      });
-      this.producers = movieCredits.crew.filter((crewMem: any) => {
-        return crewMem.job == "Producer";
-      });
-      this.writers = movieCredits.crew.filter((crewMem: any) => {
-        return crewMem.job == "Writer";
-      });
+        this.directors = movieCredits.crew.filter((crewMem: any) => {
+          return crewMem.job == "Director";
+        });
+        this.producers = movieCredits.crew.filter((crewMem: any) => {
+          return crewMem.job == "Producer";
+        });
+        this.writers = movieCredits.crew.filter((crewMem: any) => {
+          return crewMem.job == "Writer";
+        });
+      },
+      complete: () => {
+        this.getMovieRecomendations();
+      },
+      error: () => {
+        this.getMovieRecomendations();
+      },
     });
   }
 
-  private getMovieImages(id: number) {
-    this.movieSRV.getMovieImages(id).subscribe((movieImages) => {
-      this.backdrops = movieImages.backdrops.slice(0, 29);
-      this.posters = movieImages.posters.slice(0, 29);
+  private getMovieImages() {
+    this.movieSRV.getMovieImages(this.movieId).subscribe({
+      next: (movieImages) => {
+        this.backdrops = movieImages.backdrops.slice(0, 29);
+        this.posters = movieImages.posters.slice(0, 29);
+      },
+      complete: () => {
+        this.getMovieCredits();
+      },
+      error: () => {
+        this.getMovieCredits();
+      },
     });
   }
 
-  private getMovieRecomendations(id: number) {
-    this.movieSRV.getMovieRecomendations(id).subscribe((movieData) => {
-      this.movieRecomendations = Sharedfunctions.mapMovieToCard(movieData.results, this.movieGenreList);
+  private getMovieRecomendations() {
+    this.movieSRV.getMovieRecomendations(this.movieId).subscribe({
+      next: (movieData) => {
+        this.movieRecomendations = Sharedfunctions.mapMovieToCard(movieData.results, this.movieGenreList);
+      },
+      complete: () => {
+        this.appStatusSRV.hideSpinner();
+      },
+      error: () => {
+        this.appStatusSRV.hideSpinner();
+      },
     });
   }
 
@@ -86,40 +125,44 @@ export class MovieInfoPage implements OnInit, OnDestroy {
    * @deprecated can't be used since it doesn't return neither a link or video to watch
    * @param id  the movie Id
    */
-  private getMovieVideos(id: number) {
-    this.movieSRV.getMovieVideos(id).subscribe((movieData) => {});
+  private getMovieVideos() {
+    this.movieSRV.getMovieVideos(this.movieId).subscribe((movieData) => {});
   }
 
-  private getMovieWatchProviders(id: number) {
-    this.movieSRV.getMovieWatchProviders(id).subscribe((movieProviders) => {
-      console.log(movieProviders.results.US);
-      if (movieProviders.results.US.buy) {
-        this.providers.push(
-          ...movieProviders.results.US.buy.map((prov: StreamingProvider) => {
-            prov.logo_path = IMG_PATH + prov.logo_path;
-            return prov;
-          })
-        );
-      }
-      if (movieProviders.results.US.flatrate) {
-        this.providers.push(
-          ...movieProviders.results.US.flatrate.map((prov: StreamingProvider) => {
-            prov.logo_path = IMG_PATH + prov.logo_path;
-            return prov;
-          })
-        );
-      }
+  private getMovieWatchProviders() {
+    this.movieSRV.getMovieWatchProviders(this.movieId).subscribe({
+      next: (movieProviders) => {
+        console.log(movieProviders.results.US);
+        if (movieProviders.results.US.buy) {
+          this.providers.push(
+            ...movieProviders.results.US.buy.map((prov: StreamingProvider) => {
+              prov.logo_path = IMG_PATH + prov.logo_path;
+              return prov;
+            })
+          );
+        }
+        if (movieProviders.results.US.flatrate) {
+          this.providers.push(
+            ...movieProviders.results.US.flatrate.map((prov: StreamingProvider) => {
+              prov.logo_path = IMG_PATH + prov.logo_path;
+              return prov;
+            })
+          );
+        }
+      },
+      complete: () => {
+        this.getMovieImages();
+      },
+      error: () => {
+        this.getMovieImages();
+      },
     });
   }
 
   private onGetPath() {
     this.sub = this.route.params.subscribe((params: Params) => {
-      const id = +params["id"];
-      this.getMovie(id);
-      this.getMovieCredits(id);
-      this.getMovieImages(id);
-      this.getMovieRecomendations(id);
-      this.getMovieWatchProviders(id);
+      this.movieId = +params["id"];
+      this.getMovie();
     });
   }
 }

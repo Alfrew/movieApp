@@ -35,13 +35,17 @@ export class MaSearchComponent implements OnInit, OnDestroy {
   }
 
   private getMovies(searchValue: string) {
-    this.movieSRV.searchMovie(searchValue).subscribe((res) => {
-      this.movieList = res.results.slice(0, 3);
+    this.movieSRV.searchMovie(searchValue).subscribe({
+      next: (res) => {
+        this.movieList = res.results.slice(0, 3);
+      },
     });
   }
   private getShows(searchValue: string) {
-    this.showSRV.searchShow(searchValue).subscribe((res) => {
-      this.showList = res.results.slice(0, 3);
+    this.showSRV.searchShow(searchValue).subscribe({
+      next: (res) => {
+        this.showList = res.results.slice(0, 3);
+      },
     });
   }
 }

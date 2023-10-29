@@ -49,7 +49,6 @@ export class MoviesPage implements OnInit {
 
   ngOnInit(): void {
     this.getGenres();
-    this.getMovies();
   }
 
   public filtersChanged(selectedFilters: Filters) {
@@ -77,8 +76,14 @@ export class MoviesPage implements OnInit {
   }
 
   private getGenres() {
-    this.movieSRV.getMovieGenresList().subscribe((res) => {
-      this.movieGenreList = res.genres;
+    this.appStatusSRV.showSpinner();
+    this.movieSRV.getMovieGenresList().subscribe({
+      next: (res) => {
+        this.movieGenreList = res.genres;
+      },
+      complete: () => {
+        this.getMovies();
+      },
     });
   }
 
