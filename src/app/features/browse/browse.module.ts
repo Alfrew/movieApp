@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { FiltersComponent } from "./components/filters/filters.component";
 import { FiltersBottomSheetComponent } from "./components/filters-bottom-sheet/filters-bottom-sheet.component";
-import { MovieRoutingModule } from "./movie-routing.module";
+import { BrowseRoutingModule } from "./browse-routing.module";
 import { MovieInfoPage } from "./pages/movie-info/movie-info.page";
 import { MoviesPage } from "./pages/movies/movies.page";
 import { ProviderElementComponent } from "./components/provider-element/provider-element.component";
@@ -43,7 +43,7 @@ import { SmInputSelectModule } from "src/app/shared/inputs/sm-input-select/sm-in
     MatIconModule,
     MatSlideToggleModule,
     MinutesConverterPipeModule,
-    MovieRoutingModule,
+    BrowseRoutingModule,
     NumberSuffixPipeModule,
     PaginatorModule,
     ScmInputSelectModule,
@@ -55,4 +55,4 @@ import { SmInputSelectModule } from "src/app/shared/inputs/sm-input-select/sm-in
     SmInputSelectModule,
   ],
 })
-export class MovieModule {}
+export class BrowseModule {}

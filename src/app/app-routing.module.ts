@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: "discover", loadChildren: () => import("./features/discover/dicover.module").then((m) => m.DiscoverModule) },
   {
     path: "browse",
-    loadChildren: () => import("./features/movie/movie.module").then((m) => m.MovieModule),
+    loadChildren: () => import("./features/browse/browse.module").then((m) => m.BrowseModule),
   },
   {
     path: "user",

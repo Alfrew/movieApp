@@ -1,9 +1,9 @@
-import { CardCta, CardInfo } from "src/app/features/movie/models/card";
-import { CastMember } from "src/app/features/movie/models/cast-member";
-import { Genre } from "src/app/features/movie/models/genre";
+import { CardCta, CardInfo } from "src/app/features/browse/models/card";
+import { CastMember } from "src/app/features/browse/models/cast-member";
+import { Genre } from "src/app/features/browse/models/genre";
 import { IMG_PATH } from "../constants/httpConsts";
-import { Movie } from "src/app/features/movie/models/movie";
-import { Show } from "src/app/features/movie/models/show";
+import { Movie } from "src/app/features/browse/models/movie";
+import { Show } from "src/app/features/browse/models/show";
 
 export abstract class Sharedfunctions {
   static getRandomIntFromInterval(min: number, max: number): number {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MovieService } from "../features/movie/services/movie.service";
+import { MovieService } from "../features/browse/services/movie.service";
 
 @Component({
   selector: "page-test",

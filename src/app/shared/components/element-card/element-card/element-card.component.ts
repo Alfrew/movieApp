@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { CardCta, CardInfo } from "../../../../features/movie/models/card";
+import { CardCta, CardInfo } from "../../../../features/browse/models/card";
 
 @Component({
   selector: "app-element-card",
