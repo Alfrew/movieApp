@@ -4,7 +4,7 @@ import { DiscoverPage } from "./pages/discover/discover.page";
 
 const routes: Routes = [
   {
-    path: "discover",
+    path: "",
     component: DiscoverPage,
   },
 ];

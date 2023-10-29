@@ -1,1 +1,55 @@
-<p>discovera</p>
+<div *ngIf="random" class="header-wrapper overlay-black" [ngStyle]="{'background-image': 'url('+ imgPathStatus + random.backdrop_path + ')'}">
+  <div class="header-container">
+    <h3>Welcome!</h3>
+    <p>Millions of movies, TV shows and people to discover. Explore now.</p>
+  </div>
+</div>
+
+<!-- NOW PLAYING MOVIES //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<app-ma-section *ngIf="movieCardNowPlaying.length>0" sectionTitle="Now playing Movies">
+  <div class="media-flex">
+    <app-element-card *ngFor="let card of movieCardNowPlaying" [card]="card" [routerLink]="['/browse/movies', card.id]"></app-element-card>
+  </div>
+</app-ma-section>
+
+<!-- UPCOMING MOVIES /////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<app-ma-section *ngIf="movieCardUpcoming.length>0" sectionTitle="Upcoming movies">
+  <div class="media-flex">
+    <app-element-card *ngFor="let card of movieCardUpcoming" [card]="card" [routerLink]="['/browse/movies', card.id]"></app-element-card>
+  </div>
+</app-ma-section>
+
+<!-- TOP RATED MOVIES ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<app-ma-section *ngIf="movieCardTop.length>0" sectionTitle="Top Rated movies">
+  <div class="media-flex">
+    <app-element-card *ngFor="let card of movieCardTop" [card]="card" [routerLink]="['/browse/movies', card.id]"></app-element-card>
+  </div>
+</app-ma-section>
+
+<!-- POPULAR MOVIES //////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<app-ma-section *ngIf="movieCardPopular.length>0" sectionTitle="Popular movies">
+  <div class="media-flex">
+    <app-element-card *ngFor="let card of movieCardPopular" [card]="card" [routerLink]="['/browse/movies', card.id]"></app-element-card>
+  </div>
+</app-ma-section>
+
+<!-- SHOWS ON AIR  ///////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<app-ma-section *ngIf="showCardOnTheAir.length>0" sectionTitle="Shows On Air">
+  <div class="media-flex">
+    <app-element-card *ngFor="let card of showCardOnTheAir" [card]="card" [routerLink]="['/browse/shows', card.id]"></app-element-card>
+  </div>
+</app-ma-section>
+
+<!-- TOP SHOWS ///////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<app-ma-section *ngIf="showCardTop.length>0" sectionTitle="Top Shows">
+  <div class="media-flex">
+    <app-element-card *ngFor="let card of showCardTop" [card]="card" [routerLink]="['/browse/shows', card.id]"></app-element-card>
+  </div>
+</app-ma-section>
+
+<!-- POPULAR SHOWS ///////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<app-ma-section *ngIf="showCardPopular.length>0" sectionTitle="Popular Shows">
+  <div class="media-flex">
+    <app-element-card *ngFor="let card of showCardPopular" [card]="card" [routerLink]="['/browse/shows', card.id]"></app-element-card>
+  </div>
+</app-ma-section>

@@ -1,0 +1,51 @@
+@import "/src/assets/styles/variables.scss";
+.header-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 16/9;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  width: 100%;
+  overflow: hidden;
+  color: $primary-text-color;
+}
+
+.media-flex {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.header-container {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  padding: 0 48px;
+
+  h3 {
+    font-size: 3rem;
+    margin: 0;
+  }
+  p {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+}
+
+.overlay-black {
+  position: relative;
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
